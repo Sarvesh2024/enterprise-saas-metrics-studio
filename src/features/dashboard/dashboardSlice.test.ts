@@ -1,6 +1,7 @@
 import dashboardReducer, { setTimeframe, setStatus } from './dashboardSlice';
 
 describe('Dashboard Redux Slice', () => {
+  // Added themeMode: 'light' here to match our real updated Redux state structure
   const initialState = {
     metrics: [
       { month: 'Jan', revenue: 4000, users: 2400, sales: 2400 },
@@ -12,6 +13,7 @@ describe('Dashboard Redux Slice', () => {
     ],
     timeframe: '6months',
     status: 'idle' as const,
+    themeMode: 'light' as const, // Added this field to resolve TS2345 compiler blocker
   };
 
   it('should return the initial state when passed an empty action', () => {
@@ -26,7 +28,7 @@ describe('Dashboard Redux Slice', () => {
   it('should filter metrics to 3 months when timeframe is set to 3months', () => {
     const actual = dashboardReducer(initialState, setTimeframe('3months'));
     expect(actual.timeframe).toEqual('3months');
-    expect(actual.metrics.length).toEqual(3); // Verifies only Apr, May, Jun are returned
+    expect(actual.metrics.length).toEqual(3); 
     expect(actual.metrics[0].month).toEqual('Apr');
   });
 });
